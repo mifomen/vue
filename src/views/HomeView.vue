@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome Mifomen to Your Vue.js App" />
+    {{ name }} {{ age }}
   </div>
 </template>
 
@@ -12,6 +13,12 @@ export default {
   name: "HomeView",
   components: {
     HelloWorld,
+  },
+  data: function () {
+    return {
+      name: "mifomen",
+      age: 18,
+    };
   },
 };
 </script>

@@ -1,12 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view />
+  <span><GetItems /></span>
 </template>
 
-<style lang="scss">
+<script>
+import GetItems from "@/components/GetItems.vue";
+
+export default {
+  components: {
+    GetItems,
+  },
+  setup() {},
+};
+</script>
+
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,6 +23,10 @@
   color: #2c3e50;
 }
 
+h1 {
+  color: rgb(163, 42, 117);
+  font-size: 33rem;
+}
 nav {
   padding: 30px;
 
