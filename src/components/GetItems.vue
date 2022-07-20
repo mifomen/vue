@@ -19,7 +19,7 @@
       <ul class="pagination">
         <li class="disabled">
           <a href="#!">
-            <i class="waves-effect material-icons">Назад</i>
+            <i class="waves-effect material-icons">Назад!</i>
           </a>
         </li>
         <li class=""><a href="#!">1</a></li>
@@ -29,7 +29,7 @@
         <li class="waves-effect"><a href="#!">5</a></li>
         <li class="waves-effect">
           <a href="#!">
-            <i class="waves-effect material-icons">Вперед</i>
+            <i class="waves-effect material-icons">Вперед!</i>
           </a>
         </li>
       </ul>
