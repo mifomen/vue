@@ -1,26 +1,65 @@
 <template>
-  <span v-if="initialized">
-    <button v-on:Click="sortArrayByFamiliya">sort</button>
-    <div id="GetItems">
-      <ol>
-        <li v-for="item in teacherList" v-bind:key="item.id">
-          {{ item.fio }}
-        </li>
-      </ol>
+  <span v-if="loading && initialized">
+    <div class="progress">
+      <div class="indeterminate"></div>
     </div>
   </span>
-  <!-- <span v-if="initialized">
+  <span v-if="initialized">
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+    <button
+      v-on:Click="sortArrayByFamiliya"
+      class="waves-effect waves-light btn-large"
+    >
+      <strong class="material-icons">Сортировка по ФИО</strong>
+    </button>
+
     <div id="GetItems">
-      <ol>
-        <li v-for="item in teacherList" v-bind:key="item.id">
-          {{ item.fio }}
+      <ul class="pagination">
+        <li class="disabled">
+          <a href="#!">
+            <i class="waves-effect material-icons">Назад</i>
+          </a>
+        </li>
+        <li class=""><a href="#!">1</a></li>
+        <li class="waves-effect active"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect">
+          <a href="#!">
+            <i class="waves-effect material-icons">Вперед</i>
+          </a>
+        </li>
+      </ul>
+      <ol class="collection with-header">
+        <li
+          v-for="item in teacherList"
+          v-bind:key="item.id"
+          class="collection-item"
+        >
+          {{ item.fio }} {{ item.fio.length }}
         </li>
       </ol>
+      <!-- {{ teacherList[3].fio }} -->
     </div>
-  </span> -->
+  </span>
+  <!-- <Paginate
+    :page-count="22"
+    :click-handler="pageChangeHandler"
+    :prev-text="'Prev'"
+    :next-text="'Next'"
+    :container-class="'pagination waves-effect'"
+  /> -->
 </template>
 <script>
+// import Paginate from "vuejs-paginate";
+
 export default {
+  // components: {
+  //   Paginate,
+  // },
   name: "GetItems",
   el: "#GetItems",
   data: function () {
@@ -35,6 +74,7 @@ export default {
     counterIncrease: function () {
       return this.counter++;
     },
+    pageChangeHandler: function () {},
     trySortByFio: function (d1, d2) {
       //функция для сортировани по фио
       if (d1.fio.toLowerCase() > d2.fio.toLowerCase()) {
@@ -91,4 +131,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+button > strong {
+  font-size: 32px;
+  text-transform: none;
+}
+</style>
