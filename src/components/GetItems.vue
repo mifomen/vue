@@ -39,7 +39,39 @@
           v-bind:key="item.id"
           class="collection-item"
         >
-          {{ item.fio }} {{ item.fio.length }}
+          <div v-if="item.show">
+            <span vi-if="item.fio">
+              {{ item.fio }}
+            </span>
+            <span v-if="item.dolzhnost">
+              <strong>Занимаемая должность:</strong> {{ item.dolzhnost }}
+            </span>
+            <span v-if="item.levelStudy">
+              <strong>Уровень образование:</strong> {{ item.levelStudy }}
+            </span>
+            <span v-if="item.qualification">
+              <strong>Квалификация:</strong>
+              {{ item.qualification }}
+            </span>
+            <span v-if="item.directionStudy">
+              <strong
+                >Наименование направления подготовки и (или) специальности:
+              </strong>
+              {{ item.directionStudy }}
+            </span>
+            <span v-if="item.upQualification">
+              <strong>Повышение квалификации:</strong>
+              {{ item.upQualification }}
+            </span>
+            <span v-if="item.workExperienceInYearStart">
+              <strong>Общий стаж работы:</strong>
+              {{ new Date().getFullYear() - item.workExperienceInYearStart }}
+            </span>
+            <span v-if="item.workAsTeacherInYearStart">
+              <strong>Стаж работы по специальности:</strong>
+              {{ new Date().getFullYear() - item.workAsTeacherInYearStart }}
+            </span>
+          </div>
         </li>
       </ol>
       <!-- {{ teacherList[3].fio }} -->
@@ -135,5 +167,16 @@ export default {
 button > strong {
   font-size: 32px;
   text-transform: none;
+}
+li > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ol > li {
+  width: 50%;
+}
+li > div > span {
+  width: 100%;
 }
 </style>

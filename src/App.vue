@@ -1,6 +1,8 @@
 <template>
   <router-view />
-  <span><GetItems /></span>
+  <span>
+    <GetItems />
+  </span>
 </template>
 
 <script>
