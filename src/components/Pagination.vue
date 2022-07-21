@@ -2,41 +2,67 @@
   <!-- <div v-if="listData">Loading...</div> -->
   <div id="Pagination">
     <ul class="pagination">
-      <!-- <li class="active"><a href="#!">0</a></li> -->
+      <button @click="prevPage" class="btn">prevPage</button>
       <li
         class="waves-effectactive"
-        v-for="(item, index) in paginationCountSize"
+        v-for="(item, index) in getCountPage"
         v-bind:key="item.id"
       >
-        <a href="#!"> {{ ++index }}</a>
+        <a class="active" href="#!" @click="currentListPage">
+          {{ ++index }}
+        </a>
+        <!-- <a v-if-else href="#!" @click="currentListPage">
+          {{ ++index }} -->
+        <!-- </a> -->
       </li>
-
-      <!-- <li class="waves-effect"><a href="#!">2</a></li>
-      <li class="waves-effect"><a href="#!">3</a></li>
-      <li class="waves-effect"><a href="#!">4</a></li>
-      <li class="waves-effect"><a href="#!">5</a></li> -->
-      <button @click="sliceData" class="btn">prevPage</button>
-      <button @click="renderItemsOnPage" class="btn">nextPage</button>
+      <button @click="nextPage" class="btn">nextPage</button>
     </ul>
   </div>
   <ul class="flex">
-    <!-- <li>listData[0].fio = {{ listData[0] }}</li> -->
     <!-- <li>listData.length = {{ listData.length }}</li> -->
   </ul>
-  <ul class="collection">
-    <ol
-      class="collection-item"
-      v-for="(item, index) in getAllItems[0]"
+  <ol class="collection collection-items">
+    <li
+      class="collection-item list"
+      v-for="(item, index) in getAllItems[page]"
       v-bind:key="item.id"
     >
-      {{
-        ++index
-      }}.
-      {{
-        item.fio
-      }}
-    </ol>
-  </ul>
+      <!-- <span class="index"> {{ ++index + pageSize * page }}. </span> -->
+      <span>
+        {{ ++index + pageSize * page }}.
+        <strong>ФИО {{ item.fio }} </strong>
+      </span>
+      <span>
+        <strong> Занимаемая должность: </strong> {{ item.dolzhnost }}
+      </span>
+      <span>
+        <strong>Уровень образование:</strong>
+        {{ item.levelStudy }}
+      </span>
+      <span>
+        <strong>Квалификация:</strong>
+        {{ item.qualification }}
+      </span>
+      <span>
+        <strong
+          >Наименование направления подготовки и (или) специальности:</strong
+        >
+        {{ item.directionStudy }}
+      </span>
+      <span>
+        <strong>Общий стаж работы:</strong>
+        {{ item.workExperienceInYearStart }}
+      </span>
+      <span>
+        <strong>Стаж работы по специальности:</strong>
+        {{ item.workAsTeacherInYearStart }}
+      </span>
+      <span>
+        <strong>Преподоваемые учебные предметы:</strong>
+        {{ item.subjectsTaught }}
+      </span>
+    </li>
+  </ol>
 </template>
 
 <script>
@@ -47,8 +73,9 @@ export default {
   el: "#Pagination",
   data: function () {
     return {
-      page: 1,
+      page: 0,
       pageSize: 7,
+      // index: 0,
       initialized: false,
       allItems: null,
       items: null,
@@ -62,11 +89,20 @@ export default {
     },
   },
   methods: {
+    currentListPage(evt) {
+      document.querySelector(".active").classList.remove("active");
+      evt.target.parentNode.classList.add("active");
+      // this.page = parseInt(--evt.target.textContent, 10);
+    },
     nextPage() {
-      this.pageNumber++;
+      if (parseInt(this.page, 10) < this.pageSize - 1) {
+        parseInt(this.page++, 10);
+      }
     },
     prevPage() {
-      this.pageNumber--;
+      if (parseInt(this.page, 10) > 0) {
+        parseInt(this.page--, 10);
+      }
     },
   },
   computed: {
@@ -77,7 +113,7 @@ export default {
     },
     getCountPage() {
       // считаем солько будет кнопок для страницы
-      return _.size(this.allItems);
+      return _.size(this.getAllItems);
     },
     // какие элементы будет отрисовываться по  индекусу у allitems
     renderItemsOnPage() {
@@ -92,4 +128,24 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list span {
+  width: 100%;
+  // position: relative;
+}
+
+.index {
+  // position: absolute;
+  // left: -50px;
+  font-weight: 500;
+}
+
+// .collection-items li:: marker {
+//   content: "{{  ++index + pageSize * page }}";
+// }
 </style>
