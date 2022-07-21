@@ -15,7 +15,7 @@
       <strong class="material-icons">Сортировка по ФИО</strong>
     </button>
 
-    <div id="GetItems">
+    <div id="GetItems" v-show="false">
       <ul class="pagination">
         <li class="disabled">
           <a href="#!">
@@ -77,6 +77,9 @@
       <!-- {{ teacherList[3].fio }} -->
     </div>
   </span>
+  <div v-if="this.initialized">
+    <PaginationItems :listData="this.teacherList" />
+  </div>
   <!-- <Paginate
     :page-count="22"
     :click-handler="pageChangeHandler"
@@ -87,11 +90,11 @@
 </template>
 <script>
 // import Paginate from "vuejs-paginate";
-
+import PaginationItems from "@/components/Pagination.vue";
 export default {
-  // components: {
-  //   Paginate,
-  // },
+  components: {
+    PaginationItems,
+  },
   name: "GetItems",
   el: "#GetItems",
   data: function () {
