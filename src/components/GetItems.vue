@@ -154,10 +154,10 @@ export default {
     // async getData (URL)
     try {
       fetch(URL)
-        .then((this.initialized = true))
         .then((response) => response.json())
         // .sort(this.sortByFio)
         .then((json) => (this.teacherList = json.sort(this.trySortByFio)))
+        .then((this.initialized = true))
         .then((json) => console.log("json", json));
       // .then(this.teacherList = this.teacherList)
     } catch (errors) {

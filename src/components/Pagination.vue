@@ -1,13 +1,14 @@
 <template>
+  <!-- <div v-if="listData">Loading...</div> -->
   <div id="Pagination">
     <ul class="pagination">
-      <li class="active"><a href="#!">1</a></li>
+      <!-- <li class="active"><a href="#!">0</a></li> -->
       <li
         class="waves-effectactive"
-        v-for="(item, index) in pageCount"
+        v-for="(item, index) in paginationCountSize"
         v-bind:key="item.id"
       >
-        {{ index }}
+        <a href="#!"> {{ ++index }}</a>
       </li>
 
       <!-- <li class="waves-effect"><a href="#!">2</a></li>
@@ -15,11 +16,26 @@
       <li class="waves-effect"><a href="#!">4</a></li>
       <li class="waves-effect"><a href="#!">5</a></li> -->
       <button @click="sliceData" class="btn">prevPage</button>
-      <button @click="nextPage" class="btn">nextPage</button>
+      <button @click="renderItemsOnPage" class="btn">nextPage</button>
     </ul>
   </div>
-  <ul>
-    <li>{{ listData }}</li>
+  <ul class="flex">
+    <!-- <li>listData[0].fio = {{ listData[0] }}</li> -->
+    <!-- <li>listData.length = {{ listData.length }}</li> -->
+  </ul>
+  <ul class="collection">
+    <ol
+      class="collection-item"
+      v-for="(item, index) in getAllItems[0]"
+      v-bind:key="item.id"
+    >
+      {{
+        ++index
+      }}.
+      {{
+        item.fio
+      }}
+    </ol>
   </ul>
 </template>
 
@@ -34,8 +50,8 @@ export default {
       page: 1,
       pageSize: 7,
       initialized: false,
-      allItems: [],
-      items: [],
+      allItems: null,
+      items: null,
       paginationCountSize: 5,
     };
   },
@@ -54,19 +70,26 @@ export default {
     },
   },
   computed: {
-    sliceData: function () {
-      this.allItems = _.chunk(this.listData, this.pageSize);
-      this.pageCount = _.size(this.allItems);
-      console.log(
-        " this.pageCount ",
-        this.pageCount,
-        "this.allItems",
-        this.allItems
-      );
-      this.items = this.allItems(this.page - 1) || this.allItems[0];
+    getAllItems() {
+      // делим элементы на группы по pathSize
+      // this.allItems =  ;
+      return _.chunk(this.listData, this.pageSize);
+    },
+    getCountPage() {
+      // считаем солько будет кнопок для страницы
+      return _.size(this.allItems);
+    },
+    // какие элементы будет отрисовываться по  индекусу у allitems
+    renderItemsOnPage() {
+      return this.allItems(this.page - 1) || this.allItems[0];
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+</style>
