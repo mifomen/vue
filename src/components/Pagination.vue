@@ -96,7 +96,7 @@ export default {
   data: function () {
     return {
       page: 0,
-      pageSize: 7,
+      pageSize: 4,
       index: 0,
       initialized: false,
       allItems: null,

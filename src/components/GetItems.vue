@@ -68,7 +68,7 @@ export default {
       return URL;
     },
   },
-  created() {
+  mounted() {
     const URL =
       "https://raw.githubusercontent.com/mifomen/vue-test/master/src/teachers.json";
     // async getData (URL)
