@@ -8,7 +8,7 @@
         v-for="(item, index) in getCountPage"
         v-bind:key="item.id"
       >
-        <a class="active" href="#!" @click="currentListPage">
+        <a href="#!" @click="currentListPage">
           {{ ++index }}
         </a>
         <!-- <a v-if-else href="#!" @click="currentListPage">
@@ -18,9 +18,6 @@
       <button @click="nextPage" class="btn">nextPage</button>
     </ul>
   </div>
-  <ul class="flex">
-    <!-- <li>listData.length = {{ listData.length }}</li> -->
-  </ul>
   <ol class="collection collection-items">
     <li
       class="collection-item list"
@@ -28,9 +25,18 @@
       v-bind:key="item.id"
     >
       <!-- <span class="index"> {{ ++index + pageSize * page }}. </span> -->
-      <span>
+      <span v-if="item.fio">
         {{ ++index + pageSize * page }}.
-        <strong>ФИО {{ item.fio }} </strong>
+        <strong>Фамилия: </strong>
+        {{ item.fio.split(" ")[0] }}
+      </span>
+      <span v-if="item.fio">
+        <strong>Имя: </strong>
+        {{ item.fio.split(" ")[1] }}
+      </span>
+      <span v-if="item.fio">
+        <strong>Отчество: </strong>
+        {{ item.fio.split(" ")[2] }}
       </span>
       <span>
         <strong> Занимаемая должность: </strong> {{ item.dolzhnost }}
@@ -49,16 +55,32 @@
         >
         {{ item.directionStudy }}
       </span>
-      <span>
+      <span v-if="item.academicDegree">
+        <strong>Ученая степень:</strong>
+        {{ item.academicDegree }}
+      </span>
+      <span v-if="item.academicTitle">
+        <strong>Ученое звание:</strong>
+        {{ item.academicTitle }}
+      </span>
+      <span v-if="item.upQualification">
+        <strong>
+          Повышение квалификации и профессиональная переподготовка (при наличии)
+        </strong>
+        {{ item.upQualification }}
+      </span>
+      <span v-show="false">
         <strong>Общий стаж работы:</strong>
         {{ item.workExperienceInYearStart }}
       </span>
-      <span>
+      <span v-if="item.workAsTeacherInYearStart">
         <strong>Стаж работы по специальности:</strong>
         {{ item.workAsTeacherInYearStart }}
       </span>
       <span>
-        <strong>Преподоваемые учебные предметы:</strong>
+        <strong>
+          Преподаваемые учебные предметы, курсы, дисциплины (модули):
+        </strong>
         {{ item.subjectsTaught }}
       </span>
     </li>
@@ -75,11 +97,12 @@ export default {
     return {
       page: 0,
       pageSize: 7,
-      // index: 0,
+      index: 0,
       initialized: false,
       allItems: null,
       items: null,
       paginationCountSize: 5,
+      PARSE_INT: 10,
     };
   },
   props: {
@@ -90,18 +113,27 @@ export default {
   },
   methods: {
     currentListPage(evt) {
-      document.querySelector(".active").classList.remove("active");
+      evt.preventDefault();
+      // if (document.querySelector(".v-first")) {
+      // document.querySelector(".v-first").classList.add("active");
+      // }
+      if (document.querySelector(".active")) {
+        document.querySelector(".active").classList.remove("active");
+      }
       evt.target.parentNode.classList.add("active");
+      // this.index = parseInt(this.page, this.PARSE_INT);
+      this.page = parseInt(evt.target.textContent, this.PARSE_INT) - 1;
+      console.log("evt.target.textContent", evt.target.textContent);
       // this.page = parseInt(--evt.target.textContent, 10);
     },
     nextPage() {
-      if (parseInt(this.page, 10) < this.pageSize - 1) {
-        parseInt(this.page++, 10);
+      if (parseInt(this.page, this.PARSE_INT) < this.pageSize - 1) {
+        parseInt(this.page++, this.PARSE_INT);
       }
     },
     prevPage() {
-      if (parseInt(this.page, 10) > 0) {
-        parseInt(this.page--, 10);
+      if (parseInt(this.page, this.PARSE_INT) > 0) {
+        parseInt(this.page--, this.PARSE_INT);
       }
     },
   },
@@ -124,11 +156,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.flex {
-  display: flex;
-  flex-direction: column;
-}
-
 .list {
   display: flex;
   flex-wrap: wrap;

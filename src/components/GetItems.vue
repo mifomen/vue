@@ -19,7 +19,6 @@
   <div v-if="initialized">
     <PaginationItems :listData="this.teacherList" />
   </div>
-  /> -->
 </template>
 <script>
 import PaginationItems from "@/components/Pagination.vue";
@@ -87,7 +86,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 button > strong {
   font-size: 32px;
   text-transform: none;
